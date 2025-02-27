@@ -1,0 +1,8 @@
+# Ignore artifacts:
+build
+coverage
+.next
+.idea
+package.json
+bun.lock
+.gitignore
