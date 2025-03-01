@@ -34,11 +34,6 @@ jobs:
           node --version
           bun --version
 
-      - name: Clear pnpm and build caches
-        run: |
-          rm -rf .next
-          rm -rf build
-
       - name: Install dependencies
         run: bun install
 
@@ -47,3 +42,5 @@ jobs:
 
       - name: Build the project
         run: bun run build
+        env:
+          NEXT_PUBLIC_ENDPOINT: ${{secrets.NEXT_PUBLIC_ENDPOINT}}
