@@ -1,9 +1,9 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
-import prettierLint from "eslint-config-prettier";
-import prettierPlugin from "eslint-plugin-prettier/recommended";
+import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
 import importPlugin from "eslint-plugin-import";
+import typescriptEslintParser from "@typescript-eslint/parser";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,12 +12,19 @@ const compat = new FlatCompat({
     baseDirectory: __dirname,
 });
 
-const eslintConfig = [
-    ...compat.extends("next/core-web-vitals", "next/typescript"),
-    prettierLint,
-    prettierPlugin,
-    importPlugin,
+const rules = [
+    ...compat.extends("next/core-web-vitals", "next", "plugin:@typescript-eslint/recommended"),
     {
+        files: ["**/*.ts", "**/*.tsx"],
+        languageOptions: {
+            ecmaVersion: 2021,
+            sourceType: "module",
+            parser: typescriptEslintParser,
+        },
+        plugins: {
+            "@typescript-eslint": typescriptEslintPlugin,
+            import: importPlugin,
+        },
         rules: {
             "@typescript-eslint/no-unused-vars": [
                 "error",
@@ -54,5 +61,4 @@ const eslintConfig = [
         },
     },
 ];
-
-export default eslintConfig;
+export default rules;
