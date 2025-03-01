@@ -1,0 +1,49 @@
+name: Next.js CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 22.13.1 ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install bun
+        run: npm install -g bun
+
+      - name: Verify Node.js and bun versions
+        run: |
+          node --version
+          bun --version
+
+      - name: Clear pnpm and build caches
+        run: |
+          rm -rf .next
+          rm -rf build
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run ESLint
+        run: bun run lint
+
+      - name: Build the project
+        run: bun run build
