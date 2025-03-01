@@ -2,6 +2,7 @@ import { ShoppingCart, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import ThemeToggle from "@/components/shared/header/theme-toggle";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
@@ -24,7 +25,9 @@ const Header = () => {
                     </Link>
                 </div>
 
-                <div>
+                <div className={"flex items-center gap-x-3"}>
+                    <ThemeToggle />
+
                     <Button asChild={true} variant={"ghost"}>
                         <Link href="/cart">
                             <ShoppingCart />
@@ -32,7 +35,7 @@ const Header = () => {
                         </Link>
                     </Button>
 
-                    <Button asChild={true} variant={"ghost"}>
+                    <Button asChild={true}>
                         <Link href="/profile">
                             <User />
                             <span>Sign In</span>
