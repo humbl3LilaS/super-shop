@@ -43,7 +43,7 @@ const Header = () => {
                         </Link>
                     </Button>
                 </nav>
-                <div className={"flex items-center gap-x-3"}>
+                <div className={"flex items-center gap-x-3 md:hidden"}>
                     <Button asChild={true} variant={"ghost"}>
                         <Link href="/cart">
                             <ShoppingCart />
