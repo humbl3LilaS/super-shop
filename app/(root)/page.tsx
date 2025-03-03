@@ -1,3 +1,12 @@
-export default function Home() {
-    return <h1 className={"font-black text-sm"}>Hello</h1>;
-}
+import ProductList from "@/components/shared/product/product-list";
+import { SAMPLE_DATA } from "@/lib/constants";
+
+const HomePage = () => {
+    return (
+        <>
+            <ProductList data={SAMPLE_DATA} title={"Newest Arrivals"} limit={4} />
+        </>
+    );
+};
+
+export default HomePage;
