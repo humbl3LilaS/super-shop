@@ -2,6 +2,7 @@ import { ShoppingCart, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import MobileMenu from "@/components/shared/header/mobile-menu";
 import ThemeToggle from "@/components/shared/header/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -25,7 +26,7 @@ const Header = () => {
                     </Link>
                 </div>
 
-                <div className={"flex items-center gap-x-3"}>
+                <nav className={"hidden items-center gap-x-3 md:flex"}>
                     <ThemeToggle />
 
                     <Button asChild={true} variant={"ghost"}>
@@ -41,6 +42,14 @@ const Header = () => {
                             <span>Sign In</span>
                         </Link>
                     </Button>
+                </nav>
+                <div className={"flex items-center gap-x-3"}>
+                    <Button asChild={true} variant={"ghost"}>
+                        <Link href="/cart">
+                            <ShoppingCart />
+                        </Link>
+                    </Button>
+                    <MobileMenu />
                 </div>
             </div>
         </header>
