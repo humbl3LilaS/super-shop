@@ -6,3 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const toObject = <T>(obj: T): T => {
+    return JSON.parse(JSON.stringify(obj));
+};

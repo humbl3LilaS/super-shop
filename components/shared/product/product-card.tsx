@@ -25,9 +25,9 @@ const ProductCard = ({ data }: { data: IProduct }) => {
                     <h3 className={"text-sm font-medium"}>{data.name}</h3>
                 </Link>
                 <p className={"mt-auto flex justify-between"}>
-                    <span>{data.rating}</span>
+                    <span>{data.rating.toString()}</span>
                     {data.stock > 0 ? (
-                        <ProductPrice price={data.price} />
+                        <ProductPrice price={data.price.toFixed(2).toString()} />
                     ) : (
                         <span className={"text-destructive"}>Out of Stock</span>
                     )}
