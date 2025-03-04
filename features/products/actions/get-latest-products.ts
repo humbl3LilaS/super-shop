@@ -1,20 +1,18 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { desc } from "drizzle-orm";
+
+import { db } from "@/database/drizzle";
+import { products } from "@/database/schema";
 
 export const getLatestProducts = async () => {
-    const prisma = new PrismaClient();
-
-    const data = await prisma.product.findMany({
-        take: 4,
-        orderBy: {
-            createdAt: "desc",
-        },
-    });
-
-    if (!data) {
+    const latestProducts = await db
+        .select()
+        .from(products)
+        .limit(4)
+        .orderBy(desc(products.createdAt));
+    if (!latestProducts) {
         return [];
     }
-
-    return data;
+    return latestProducts;
 };

@@ -1,5 +1,5 @@
 import ProductCard from "@/components/shared/product/product-card";
-import { IProduct } from "@/types/index.types";
+import { IProduct } from "@/database/schema";
 
 type ProductListProps = {
     data: IProduct[];

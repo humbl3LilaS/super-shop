@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import ProductPrice from "@/components/shared/product/product-price";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { IProduct } from "@/types/index.types";
+import { IProduct } from "@/database/schema";
 
 const ProductCard = ({ data }: { data: IProduct }) => {
     return (
@@ -24,10 +24,10 @@ const ProductCard = ({ data }: { data: IProduct }) => {
                 <Link href={`/products/${data.slug}`}>
                     <h3 className={"text-sm font-medium"}>{data.name}</h3>
                 </Link>
-                <p className={"mt-auto flex justify-between"}>
+                <p className={"mt-auto flex items-center justify-between"}>
                     <span>{data.rating.toString()}</span>
                     {data.stock > 0 ? (
-                        <ProductPrice price={data.price.toFixed(2).toString()} />
+                        <ProductPrice price={data.price} />
                     ) : (
                         <span className={"text-destructive"}>Out of Stock</span>
                     )}
