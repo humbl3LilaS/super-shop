@@ -21,3 +21,9 @@ export const InsertProductSchema = z.object({
     banner: z.string().nullable(),
     price: currency,
 });
+
+export const signInSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(8),
+});
+export type SignInSchema = Zod.infer<typeof signInSchema>;
