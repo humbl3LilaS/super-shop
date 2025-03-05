@@ -17,6 +17,7 @@ const PasswordField = ({ onChange, value }: PasswordFieldProps) => {
     return (
         <div className="relative">
             <input
+                id="password"
                 value={value}
                 onChange={onChange}
                 placeholder={"Eg: SUpeR@1232"}
