@@ -45,3 +45,4 @@ jobs:
         env:
           NEXT_PUBLIC_ENDPOINT: ${{secrets.NEXT_PUBLIC_ENDPOINT}}
           DATABASE_URL: ${{secrets.DATABASE_URL}}
+          AUTH_SECRET: ${{secrets.AUTH_SECRET}}

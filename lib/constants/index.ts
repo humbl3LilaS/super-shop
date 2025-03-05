@@ -90,3 +90,17 @@ export const SAMPLE_DATA = [
         banner: null,
     },
 ];
+
+export const SAMPLE_USER = [
+    {
+        name: "Pale Edelweiss",
+        email: "sabishinekobebe@gmail.com",
+        password: "P@ssword123",
+    },
+    {
+        name: "admin123",
+        email: "admin123@gmail.com",
+        password: "Admin123!",
+        role: "ADMIN",
+    },
+];
