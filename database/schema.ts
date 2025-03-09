@@ -30,6 +30,7 @@ export const products = pgTable("products", {
     images: text("images").array().notNull(),
     price: decimal("price", { precision: 6, scale: 2 }).notNull(),
     brand: varchar("brand", { length: 200 }).notNull(),
+    category: varchar("category", { length: 200 }).notNull(),
     rating: decimal("rating", { precision: 2, scale: 1 }).notNull(),
     numReviews: integer("numReviews").notNull(),
     stock: integer("stock").notNull(),
