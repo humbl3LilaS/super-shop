@@ -14,21 +14,27 @@ const ProductImages = ({ images }: { images: string[] }) => {
                     alt={"product detail image"}
                     width={500}
                     height={500}
-                    className={"min-h-[300px] mx-auto object-cover object-center"}
+                    className={"min-h-[300px] mx-auto object-cover object-center dark:rounded-xl"}
                 />
                 <div className={"flex items-center gap-x-4"}>
                     {images.map((image, idx) => (
                         <div
                             key={image}
                             className={cn(
-                                "aspect-square w-24 p-1 rounded-md overflow-hidden border hover:border-orange-800 transition-colors duration-500",
-                                activeIdx === idx && "border-orange-500",
+                                "aspect-square w-24 p-1 rounded-md overflow-hidden border hover:border-orange-800 dark:hover:border-emerald-700 transition-colors duration-500",
+                                activeIdx === idx && "border-orange-500 dark:border-emerald-500",
                             )}
                             onClick={() => {
                                 setActiveIdx(idx);
                             }}
                         >
-                            <Image src={image} alt={"product image"} width={100} height={100} />
+                            <Image
+                                src={image}
+                                alt={"product image"}
+                                width={100}
+                                height={100}
+                                className={"rounded-md"}
+                            />
                         </div>
                     ))}
                 </div>
