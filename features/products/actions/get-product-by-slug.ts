@@ -1,9 +1,8 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/prisma/lib/prisma";
 
 export const getProductBySlug = async (slug: string) => {
-    const prisma = new PrismaClient();
     const data = await prisma.product.findFirst({
         where: { slug: slug },
     });
@@ -12,9 +11,5 @@ export const getProductBySlug = async (slug: string) => {
         return undefined;
     }
 
-    return {
-        ...data,
-        price: data.price.toString(),
-        rating: data.rating.toString(),
-    };
+    return data;
 };
