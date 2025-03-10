@@ -1,63 +1,68 @@
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import { compare } from "bcryptjs";
-import { eq } from "drizzle-orm";
 import NextAuth, { User } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 
-import { IUserRole, users } from "@/database/schema";
-
-import { db } from "./database/drizzle";
+import { signInSchema } from "@/lib/validators";
+import { prisma } from "@/prisma/lib/prisma";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+    pages: {
+        signIn: "/sign-in",
+    },
     session: {
         strategy: "jwt",
         maxAge: 24 * 60 * 60,
     },
+    adapter: PrismaAdapter(prisma),
     providers: [
         CredentialProvider({
-            credentials: { email: { type: "string" }, password: { type: "string" } },
+            credentials: {
+                email: { type: "string" },
+                password: { type: "password" },
+            },
             async authorize(credentials) {
-                if (!credentials.email || !credentials.password) {
-                    return null;
-                }
-                const [user] = await db
-                    .select()
-                    .from(users)
-                    .where(eq(users.email, credentials.email.toString()));
+                if (credentials === null) return null;
 
-                if (!user) {
+                // check if the valid import
+                const result = signInSchema.safeParse(credentials);
+                if (!result.success) {
+                    return null;
+                }
+                const user = await prisma.user.findFirst({
+                    where: { email: result.data.email },
+                });
+
+                if (!user || !user.password) {
                     return null;
                 }
 
-                const isPasswordCorrect = await compare(
-                    credentials.password.toString(),
-                    user.password,
-                );
-                if (!isPasswordCorrect) {
-                    return null;
-                }
+                const isValid = await compare(result.data.password, user.password);
+
+                if (!isValid) return null;
 
                 return {
                     id: user.id,
-                    email: user.email,
                     name: user.name,
+                    email: user.email,
                     role: user.role,
                 } as User;
             },
         }),
     ],
-    pages: {
-        signIn: `${process.env.NEXT_PUBLIC_ENDPOINT}/sign-in`,
-    },
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
-                token.role = user.role;
+                token.role = user.role!;
             }
             return token;
         },
-        async session({ session, token }) {
+        async session({ session, user, trigger, token }) {
+            if (trigger === "update") {
+                session.user.name = user.name!;
+            }
             if (token.id) {
                 session = {
                     ...session,
@@ -65,7 +70,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         ...session.user,
                         id: token.id.toString(),
                         name: token.name as string,
-                        role: token.role as IUserRole,
+                        role: token.role as "USER" | "ADMIN",
                     },
                 };
             }

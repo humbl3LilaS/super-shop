@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import ProductPrice from "@/components/shared/product/product-price";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { IProduct } from "@/database/schema";
+import { IProduct } from "@/prisma/lib/validators/validators.type";
 
 const ProductCard = ({ data }: { data: IProduct }) => {
     return (

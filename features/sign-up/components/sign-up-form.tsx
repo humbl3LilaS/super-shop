@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { signUp } from "../actions/sign-up-action";
-
 import PasswordField from "@/components/shared/password-field";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,21 +19,23 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { userInsertSchema, UserInsertSchema } from "@/database/schema";
+import { signUp } from "@/features/sign-up/actions/sign-up-action";
+import { signUpSchema, SignUpSchema } from "@/lib/validators";
 
 const SignUpForm = () => {
-    const form = useForm<UserInsertSchema>({
-        resolver: zodResolver(userInsertSchema),
+    const form = useForm<SignUpSchema>({
+        resolver: zodResolver(signUpSchema),
         defaultValues: {
             name: "",
             email: "",
             password: "",
+            confirmPassword: "",
         },
     });
 
     const router = useRouter();
 
-    const onSubmit: SubmitHandler<UserInsertSchema> = async (value) => {
+    const onSubmit: SubmitHandler<SignUpSchema> = async (value) => {
         const res = await signUp(value);
         if (!res.success) {
             return toast.error("Sign Up failed.", {
@@ -100,6 +100,23 @@ const SignUpForm = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <PasswordField
+                                            onChange={field.onChange}
+                                            value={field.value}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name={"confirmPassword"}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Confirm Password</FormLabel>
                                     <FormControl>
                                         <PasswordField
                                             onChange={field.onChange}

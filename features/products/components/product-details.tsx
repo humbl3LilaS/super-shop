@@ -1,6 +1,6 @@
 import ProductPrice from "@/components/shared/product/product-price";
-import { IProduct } from "@/database/schema";
 import ProductAction from "@/features/products/components/product-action";
+import { IProduct } from "@/prisma/lib/validators/validators.type";
 
 const ProductDetails = ({ data }: { data: IProduct }) => {
     return (

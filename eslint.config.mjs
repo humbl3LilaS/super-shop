@@ -4,6 +4,7 @@ import { FlatCompat } from "@eslint/eslintrc";
 import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
 import importPlugin from "eslint-plugin-import";
 import typescriptEslintParser from "@typescript-eslint/parser";
+import unusedImports from "eslint-plugin-unused-imports";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,17 +25,18 @@ const rules = [
         plugins: {
             "@typescript-eslint": typescriptEslintPlugin,
             import: importPlugin,
+            "unused-imports": unusedImports,
         },
         rules: {
             "@typescript-eslint/no-unused-vars": [
                 "error",
                 {
                     args: "all",
-                    argsIgnorePattern: "^_",
+                    argsIgnorePattern: "^(?:_|error)$",
                     caughtErrors: "all",
-                    caughtErrorsIgnorePattern: "^_",
-                    destructuredArrayIgnorePattern: "^_",
-                    varsIgnorePattern: "^_",
+                    caughtErrorsIgnorePattern: "^(?:_|error)$",
+                    destructuredArrayIgnorePattern: "^(?:_|error)$",
+                    varsIgnorePattern: "^(?:_|error)$",
                     ignoreRestSiblings: true,
                 },
             ],
@@ -49,6 +51,7 @@ const rules = [
                     },
                 },
             ],
+            "unused-imports/no-unused-imports": "error", // Automatically removes unused imports
             quotes: [
                 "error",
                 "double",
@@ -59,6 +62,7 @@ const rules = [
             semi: ["error", "always"],
             "comma-dangle": ["error", "always-multiline"],
         },
+        ignores: ["*.d.ts"],
     },
 ];
 export default rules;

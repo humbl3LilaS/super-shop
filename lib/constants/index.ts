@@ -96,6 +96,7 @@ export const SAMPLE_USER = [
         name: "Pale Edelweiss",
         email: "sabishinekobebe@gmail.com",
         password: "P@ssword123",
+        role: "USER",
     },
     {
         name: "admin123",

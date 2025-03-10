@@ -1,15 +1,15 @@
 import { auth } from "@/auth";
 import ProductList from "@/components/shared/product/product-list";
-import { getLatestProducts } from "@/features/products/actions/get-latest-products";
+import { getFeaturedProducts } from "@/features/products/actions/get-featured-products";
 
 const HomePage = async () => {
     const session = await auth();
     console.log(session);
-    const latestProducts = await getLatestProducts();
+    const featuredProducts = await getFeaturedProducts();
 
     return (
         <>
-            <ProductList data={latestProducts} title={"Newest Arrivals"} limit={4} />
+            <ProductList data={featuredProducts} title={"Newest Arrivals"} limit={4} />
         </>
     );
 };
