@@ -1,10 +1,12 @@
 import ProductList from "@/components/shared/product/product-list";
-import { SAMPLE_DATA } from "@/lib/constants";
+import { getFeaturedProducts } from "@/features/products/actions/get-featured-products";
 
 const HomePage = async () => {
+    const featuredProducts = await getFeaturedProducts();
+
     return (
         <>
-            <ProductList data={SAMPLE_DATA} title={"Newest Arrivals"} limit={4} />
+            <ProductList data={featuredProducts} title={"Newest Arrivals"} limit={4} />
         </>
     );
 };
