@@ -1,5 +1,5 @@
 import ProductCard from "@/components/shared/product/product-card";
-import { IProduct } from "@/database/schema";
+import { IProduct } from "@/prisma/lib/validators/validators.type";
 
 type ProductListProps = {
     data: IProduct[];
