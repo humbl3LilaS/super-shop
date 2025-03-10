@@ -1,17 +1,13 @@
-import NextAuth from "next-auth";
-
-import { IUserRole } from "@/database/schema";
-
 declare module "next-auth" {
     interface User {
-        role: IUserRole;
+        role: "USER" | "ADMIN";
     }
 
     interface Session {
         user: {
             id: string;
             name: string;
-            role: IUserRole;
+            role: "USER" | "ADMIN";
             email: string;
         };
     }
@@ -19,7 +15,7 @@ declare module "next-auth" {
     interface JWT {
         id: string;
         name: string;
-        role: IUserRole;
+        role: "USER" | "ADMIN";
         email: string;
     }
 }
