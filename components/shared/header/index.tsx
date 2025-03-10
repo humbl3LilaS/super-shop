@@ -1,8 +1,9 @@
-import { ShoppingCart, User } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import MobileMenu from "@/components/shared/header/mobile-menu";
+import SignIn from "@/components/shared/header/sign-in-btn";
 import ThemeToggle from "@/components/shared/header/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -36,12 +37,7 @@ const Header = () => {
                         </Link>
                     </Button>
 
-                    <Button asChild={true}>
-                        <Link href="/sign-in">
-                            <User />
-                            <span>Sign In</span>
-                        </Link>
-                    </Button>
+                    <SignIn />
                 </nav>
                 <div className={"flex items-center gap-x-3 md:hidden"}>
                     <Button asChild={true} variant={"ghost"}>
