@@ -37,7 +37,7 @@ const Header = () => {
                     </Button>
 
                     <Button asChild={true}>
-                        <Link href="/profile">
+                        <Link href="/sign-in">
                             <User />
                             <span>Sign In</span>
                         </Link>

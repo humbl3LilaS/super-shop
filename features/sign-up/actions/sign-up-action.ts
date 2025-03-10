@@ -1,17 +1,20 @@
 "use server";
 
 import { hash } from "bcryptjs";
-import { eq } from "drizzle-orm";
 
-import { db } from "@/database/drizzle";
-import { UserInsertSchema, users } from "@/database/schema";
 import { Cause, signInWithCredential } from "@/features/sign-in/actions/sign-in-action";
+import { SignUpSchema } from "@/lib/validators";
+import { prisma } from "@/prisma/lib/prisma";
 
 export const signUp = async (
-    payload: UserInsertSchema,
+    payload: SignUpSchema,
 ): Promise<{ success: true } | { success: false; cause: Cause }> => {
     try {
-        const [existingUser] = await db.select().from(users).where(eq(users.email, payload.email));
+        const existingUser = await prisma.user.findFirst({
+            where: {
+                email: payload.email,
+            },
+        });
         if (existingUser) {
             return {
                 success: false,
@@ -21,10 +24,15 @@ export const signUp = async (
             };
         }
         const hashedPassword = await hash(payload.password, 10);
-        const [new_user] = await db
-            .insert(users)
-            .values({ ...payload, password: hashedPassword })
-            .returning();
+
+        const new_user = await prisma.user.create({
+            data: {
+                email: payload.email,
+                name: payload.name,
+                password: hashedPassword,
+            },
+        });
+
         if (!new_user) {
             return {
                 success: false,

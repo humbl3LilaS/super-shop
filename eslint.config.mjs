@@ -62,6 +62,7 @@ const rules = [
             semi: ["error", "always"],
             "comma-dangle": ["error", "always-multiline"],
         },
+        ignores: ["*.d.ts"],
     },
 ];
 export default rules;
