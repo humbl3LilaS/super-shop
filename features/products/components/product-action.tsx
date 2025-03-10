@@ -2,7 +2,7 @@ import ProductPrice from "@/components/shared/product/product-price";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { IProduct } from "@/database/schema";
+import { IProduct } from "@/prisma/lib/validators/validators.type";
 
 const ProductAction = ({ data }: { data: IProduct }) => {
     return (
