@@ -1,17 +1,17 @@
-import * as z from "zod"
-import * as imports from "./helpers"
-import { CompleteUser, RelatedUserModelSchema } from "./index"
+import * as z from "zod";
+
+import { CompleteUser, RelatedUserModelSchema } from "./index";
 
 export const SessionModelSchema = z.object({
-  sessionToken: z.string(),
-  userId: z.string(),
-  expires: z.date(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-})
+    sessionToken: z.string(),
+    userId: z.string(),
+    expires: z.date(),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+});
 
 export interface CompleteSession extends z.infer<typeof SessionModelSchema> {
-  user: CompleteUser
+    user: CompleteUser;
 }
 
 /**
@@ -19,6 +19,8 @@ export interface CompleteSession extends z.infer<typeof SessionModelSchema> {
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedSessionModelSchema: z.ZodSchema<CompleteSession> = z.lazy(() => SessionModelSchema.extend({
-  user: RelatedUserModelSchema,
-}))
+export const RelatedSessionModelSchema: z.ZodSchema<CompleteSession> = z.lazy(() =>
+    SessionModelSchema.extend({
+        user: RelatedUserModelSchema,
+    }),
+);
