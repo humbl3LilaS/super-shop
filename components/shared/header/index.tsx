@@ -2,12 +2,15 @@ import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { auth } from "@/auth";
 import MobileMenu from "@/components/shared/header/mobile-menu";
+import ProfileDropdown from "@/components/shared/header/profile-dropdown";
 import SignIn from "@/components/shared/header/sign-in-btn";
 import ThemeToggle from "@/components/shared/header/theme-toggle";
 import { Button } from "@/components/ui/button";
 
-const Header = () => {
+const Header = async () => {
+    const session = await auth();
     return (
         <header className={"w-full border-b shadow"}>
             <div className={"wrapper flex-between"}>
@@ -37,7 +40,7 @@ const Header = () => {
                         </Link>
                     </Button>
 
-                    <SignIn />
+                    {session ? <ProfileDropdown session={session} /> : <SignIn />}
                 </nav>
                 <div className={"flex items-center gap-x-3 md:hidden"}>
                     <Button asChild={true} variant={"ghost"}>

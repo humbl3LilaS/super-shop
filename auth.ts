@@ -51,30 +51,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }),
     ],
     callbacks: {
-        async jwt({ token, user }) {
-            if (user) {
-                token.id = user.id;
-                token.email = user.email;
-                token.role = user.role!;
-            }
-            return token;
-        },
         async session({ session, user, trigger, token }) {
             if (trigger === "update") {
                 session.user.name = user.name!;
             }
-            if (token.id) {
+            if (token.sub) {
                 session = {
                     ...session,
                     user: {
                         ...session.user,
-                        id: token.id.toString(),
+                        id: token.sub!,
                         name: token.name as string,
                         role: token.role as "USER" | "ADMIN",
                     },
                 };
             }
             return session;
+        },
+        async jwt({ token, user, trigger }) {
+            if (user) {
+                token.email = user.email;
+                token.role = user.role!;
+            }
+
+            if (user && user.name == "NO_NAME") {
+                token.name = user.email!.split("@")[0];
+
+                await prisma.user.update({
+                    where: { id: user.id },
+                    data: { name: token.name },
+                });
+            }
+            return token;
         },
     },
 });
