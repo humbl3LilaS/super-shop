@@ -1,4 +1,5 @@
 "use client";
+import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -10,7 +11,7 @@ const AddToCart = ({ item }: { item: CartItem }) => {
     const router = useRouter();
 
     const onAddToCart = async () => {
-        const result = await addToCart();
+        const result = await addToCart(item);
         if (!result.success) {
             toast.error(result.message);
         }
@@ -23,7 +24,8 @@ const AddToCart = ({ item }: { item: CartItem }) => {
     };
     return (
         <Button className={"w-full mt-4"} onClick={onAddToCart}>
-            Add To card
+            <Plus />
+            <span>Add To Cart</span>
         </Button>
     );
 };
