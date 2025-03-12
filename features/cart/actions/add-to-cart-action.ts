@@ -42,6 +42,14 @@ export const addToCart = async (data: CartItem) => {
             };
         }
 
+        // Check if the stock available is sufficient
+        if (product.stock < payload.data.qty) {
+            return {
+                success: false,
+                message: "Insufficient Stock",
+            };
+        }
+
         if (!cart) {
             const newCart: ICart = {
                 userId: session?.user.id,
@@ -73,7 +81,7 @@ export const addToCart = async (data: CartItem) => {
             ...calculateCartPrice(newCartItems),
         };
 
-        // add Cart to Database
+        // update the existing cart
         await prisma.cart.update({
             //@ts-expect-error I'll type check it later
             data: newCart,

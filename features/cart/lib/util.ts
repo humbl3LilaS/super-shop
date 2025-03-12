@@ -1,7 +1,6 @@
 import { CartItem } from "@/prisma/lib/validators/helpers";
 
 /**
- * @function
  * A function that round a number | string to be compatible with Prisma's Decimal Implementation
  * @param {String | number} num
  */
@@ -14,7 +13,6 @@ export const roundToDecimal = (num: number | string) => {
 };
 
 /**
- * @function
  * A function to calculate the total price of items present in the cart
  * @param {CartItem[]} items
  */
@@ -36,11 +34,11 @@ export const calculateCartPrice = (items: CartItem[]) => {
 };
 
 /**
- * @function
  * This function return array of CartItem by increasing quantity of item if it's already exist in cart, if not append the new item to the
  * end of the items array in CartItem[]
  * @param {CartItem[]} items
  * @param {CartItem} itemToAdd
+ * @return CartItem[]
  */
 export const addItemToCart = (items: CartItem[], itemToAdd: CartItem) => {
     // check if the item is present in cart
@@ -50,7 +48,7 @@ export const addItemToCart = (items: CartItem[], itemToAdd: CartItem) => {
             if (item.slug === itemToAdd.slug) {
                 return {
                     ...item,
-                    qty: item.qty + 1,
+                    qty: item.qty + itemToAdd.qty,
                 };
             }
             return item;
