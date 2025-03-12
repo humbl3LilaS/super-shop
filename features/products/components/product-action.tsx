@@ -1,24 +1,21 @@
-import { useMemo } from "react";
-
 import ProductPrice from "@/components/shared/product/product-price";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { getCart } from "@/features/cart/actions/get-cart";
 import AddToCart from "@/features/cart/components/add-to-cart";
 import { CartItem } from "@/prisma/lib/validators/helpers";
 import { IProduct } from "@/prisma/lib/validators/validators.type";
 
-const ProductAction = ({ data }: { data: IProduct }) => {
-    const cartItemData: CartItem = useMemo(
-        () => ({
-            productId: data.id,
-            image: data.images[0],
-            price: data.price,
-            name: data.name,
-            qty: 1,
-            slug: data.slug,
-        }),
-        [data],
-    );
+const ProductAction = async ({ data }: { data: IProduct }) => {
+    const cart = await getCart();
+    const cartItemData: CartItem = {
+        productId: data.id,
+        image: data.images[0],
+        price: data.price,
+        name: data.name,
+        qty: 1,
+        slug: data.slug,
+    };
     return (
         <Card className={"mt-5 h-fit"}>
             <CardContent className="p-4 ">
@@ -34,7 +31,9 @@ const ProductAction = ({ data }: { data: IProduct }) => {
                         <Badge variant={"destructive"}>Out of Stock</Badge>
                     )}
                 </div>
-                {data.stock > 0 && <AddToCart item={cartItemData} />}
+                {data.stock > 0 && (
+                    <AddToCart item={cartItemData} cartItems={cart ? cart.items : undefined} />
+                )}
             </CardContent>
         </Card>
     );
