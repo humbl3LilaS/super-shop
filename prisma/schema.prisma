@@ -16,6 +16,7 @@ generator zod {
   relationalModel       = true
   modelCase             = "PascalCase"
   imports               = "./lib/validators/helpers"
+  modelSuffix           = "ModelSchema"
   useDecimalJs          = true
   prismaJsonNullability = true
 }
@@ -34,8 +35,8 @@ model Product {
   brand       String
   description String
   stock       Int
-  price       Decimal  @default(0) @db.Decimal(12, 2) /// @zod.custom(z.string()).min(1)
-  rating      Decimal  @default(0) @db.Decimal(3, 2) /// @zod.custom(z.string()).min(1)
+  price       Decimal  @default(0) @db.Decimal(12, 2) /// @zod.custom(imports.currency)
+  rating      Decimal  @default(0) @db.Decimal(3, 2) /// @zod.custom(imports.currency)
   numReviews  Int      @default(0)
   isFeatured  Boolean  @default(false)
   banner      String?
@@ -58,6 +59,7 @@ model User {
 
   accounts Account[]
   Session  Session[]
+  cart     Cart[]
 }
 
 model Account {
@@ -97,4 +99,17 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model Cart {
+  id            String   @id @default(uuid()) @db.Uuid
+  userId        String?  @db.Uuid
+  sessionCartId String
+  items         Json[]   @default([]) ///@zod.custom(imports.cartItem)
+  itemsPrice    Decimal  @db.Decimal(12, 2) /// @zod.custom(imports.currency)
+  totalPrice    Decimal  @db.Decimal(12, 2) /// @zod.custom(imports.currency)
+  shippingFee   Decimal  @db.Decimal(12, 2) /// @zod.custom(imports.currency)
+  tax           Decimal  @db.Decimal(12, 2) /// @zod.custom(imports.currency)
+  createdAt     DateTime @default(now()) @db.Timestamp(6)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

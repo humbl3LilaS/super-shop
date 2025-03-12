@@ -41,3 +41,12 @@ export const signUpSchema = z
     });
 
 export type SignUpSchema = Zod.infer<typeof signUpSchema>;
+
+export const insertCartSchema = z.object({
+    itemsPrice: z.string(),
+    totalPrice: z.string(),
+    salePrice: z.string(),
+    taxPrice: z.string(),
+    sessionCartId: z.string().min(1),
+    userId: z.string().optional().nullable(),
+});

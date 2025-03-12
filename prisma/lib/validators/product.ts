@@ -1,6 +1,7 @@
 import { Decimal } from "decimal.js";
 import * as z from "zod";
 
+import * as imports from "./helpers";
 
 // Helper schema for Decimal fields
 z.instanceof(Decimal)
@@ -15,7 +16,7 @@ z.instanceof(Decimal)
     })
     .transform((value) => new Decimal(value));
 
-export const ProductModel = z.object({
+export const ProductModelSchema = z.object({
     id: z.string(),
     name: z.string(),
     slug: z.string(),
@@ -24,8 +25,8 @@ export const ProductModel = z.object({
     brand: z.string(),
     description: z.string(),
     stock: z.number().int(),
-    price: z.string().min(1),
-    rating: z.string().min(1),
+    price: imports.currency,
+    rating: imports.currency,
     numReviews: z.number().int(),
     isFeatured: z.boolean(),
     banner: z.string().nullish(),
