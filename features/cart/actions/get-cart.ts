@@ -12,7 +12,7 @@ export const getCart = async () => {
 
     const session = await auth();
     const cart = await prisma.cart.findFirst({
-        where: session?.user.id ? { userId: session?.user.id } : { sessionCartId },
+        where: session?.user.id ? { userId: session?.user.id } : { sessionCartId: sessionCartId },
     });
 
     if (!cart) {

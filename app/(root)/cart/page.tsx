@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 const CartPage = async () => {
     const cart = await getCart();
+    console.log(cart);
     return (
         <section>
             <h1 className={"py-4 flex items-center gap-x-3 h2-bold"}>

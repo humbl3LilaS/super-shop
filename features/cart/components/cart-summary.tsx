@@ -32,7 +32,10 @@ const CartSummary = ({ cart }: { cart: ICart }) => {
                     <span>{formatCurrency(cart.totalPrice)}</span>
                 </p>
                 <Button asChild={true}>
-                    <Link href={`/checkout`} className={"flex justify-between items-center"}>
+                    <Link
+                        href={`/shipping-address`}
+                        className={"flex justify-between items-center"}
+                    >
                         <ArrowRight />
                         <span>Checkout</span>
                     </Link>

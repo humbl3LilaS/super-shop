@@ -38,9 +38,6 @@ const SignInForm = () => {
         }
         toast.success("Sign In successfully");
 
-        // update the signal
-        submitSuccess.value = true;
-
         return router.push("/");
     };
     return (
