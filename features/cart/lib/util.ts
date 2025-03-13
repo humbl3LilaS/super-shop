@@ -48,7 +48,7 @@ export const addItemToCart = (items: CartItem[], itemToAdd: CartItem) => {
             if (item.slug === itemToAdd.slug) {
                 return {
                     ...item,
-                    qty: item.qty + itemToAdd.qty,
+                    qty: item.qty + 1,
                 };
             }
             return item;

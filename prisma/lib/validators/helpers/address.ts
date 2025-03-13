@@ -5,3 +5,5 @@ export const address = z.object({
     city: z.string(),
     address: z.string(),
 });
+
+export type Address = Zod.infer<typeof address>;

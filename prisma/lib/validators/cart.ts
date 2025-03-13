@@ -35,7 +35,7 @@ export const CartModelSchema = z.object({
     totalPrice: imports.currency,
     shippingFee: imports.currency,
     tax: imports.currency,
-    createdAt: z.date(),
+    createdAt: z.string().min(1),
 });
 
 export interface CompleteCart extends z.infer<typeof CartModelSchema> {
