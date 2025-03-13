@@ -56,6 +56,11 @@ export const prisma = new PrismaClient({ adapter }).$extends({
                     return cart.items as CartItem[];
                 },
             },
+            createdAt: {
+                compute(cart) {
+                    return cart.createdAt.toISOString();
+                },
+            },
         },
     },
 });
