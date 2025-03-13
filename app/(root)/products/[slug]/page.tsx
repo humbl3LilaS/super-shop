@@ -4,6 +4,20 @@ import { getProductBySlug } from "@/features/products/actions/get-product-by-slu
 import ProductDetails from "@/features/products/components/product-details";
 import ProductImages from "@/features/products/components/product-images";
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const product = await getProductBySlug(slug);
+    return {
+        title: product?.name,
+        description: product?.description,
+        openGraph: {
+            title: product?.name,
+            description: product?.description,
+            images: product?.images,
+        },
+    };
+}
+
 const ProductDetailPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
     const { slug } = await params;
     const product = await getProductBySlug(slug);
