@@ -86,29 +86,36 @@ export const config = {
                     });
                 }
 
-                if (trigger === "signIn" || trigger === "signUp") {
+                if (trigger === "signIn" || trigger == "signUp") {
                     const cookiesObject = await cookies();
                     const sessionCartId = cookiesObject.get("sessionCartId")?.value;
-
-                    if (sessionCartId) {
-                        const sessionCart = await prisma.cart.findFirst({
+                    const sessionCart = await prisma.cart.findFirst({
+                        where: {
+                            sessionCartId,
+                        },
+                    });
+                    const userCart = await prisma.cart.findFirst({
+                        where: {
+                            userId: user.id,
+                        },
+                    });
+                    if (sessionCart && !userCart) {
+                        await prisma.cart.update({
                             where: {
-                                sessionCartId: sessionCartId,
+                                id: sessionCart.id,
+                            },
+                            data: {
+                                ...sessionCart,
+                                userId: user.id,
                             },
                         });
-
-                        if (sessionCart) {
-                            // Delete current user cart
-                            await prisma.cart.deleteMany({
-                                where: { userId: user.id },
-                            });
-
-                            // Assign new cart
-                            await prisma.cart.update({
-                                where: { id: sessionCart.id },
-                                data: { userId: user.id },
-                            });
-                        }
+                    } else if (userCart) {
+                        await prisma.cart.deleteMany({
+                            where: {
+                                sessionCartId,
+                            },
+                        });
+                        cookiesObject.set("sessionCartId", userCart.sessionCartId);
                     }
                 }
             }
