@@ -4,6 +4,8 @@ export const address = z.object({
     region: z.string(),
     city: z.string(),
     address: z.string(),
+    postalCode: z.string(),
+    country: z.string(),
 });
 
-export type Address = Zod.infer<typeof address>;
+export type IAddress = Zod.infer<typeof address>;

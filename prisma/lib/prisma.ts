@@ -3,7 +3,7 @@ import { PrismaNeon } from "@prisma/adapter-neon";
 import { PrismaClient } from "@prisma/client";
 import ws from "ws";
 
-import { CartItem } from "@/prisma/lib/validators/helpers";
+import { CartItem, IAddress } from "@/prisma/lib/validators/helpers";
 
 // Sets up WebSocket connections, which enables Neon to use WebSocket communication.
 neonConfig.webSocketConstructor = ws;
@@ -59,6 +59,16 @@ export const prisma = new PrismaClient({ adapter }).$extends({
             createdAt: {
                 compute(cart) {
                     return cart.createdAt.toISOString();
+                },
+            },
+        },
+        user: {
+            address: {
+                compute(data) {
+                    if (!data.address) {
+                        return undefined;
+                    }
+                    return data.address as IAddress;
                 },
             },
         },
