@@ -4,7 +4,7 @@ import { signal } from "@preact/signals-core";
 import { House, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -28,6 +28,8 @@ const SignInForm = () => {
         },
     });
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl");
 
     const onSubmit: SubmitHandler<SignInSchema> = async (values) => {
         const res = await signInWithCredential(values);
@@ -38,7 +40,7 @@ const SignInForm = () => {
         }
         toast.success("Sign In successfully");
 
-        return router.push("/");
+        return router.push(callbackUrl ?? "/");
     };
     return (
         <Card className="mx-auto max-w-lg">
