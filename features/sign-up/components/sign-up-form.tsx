@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { House, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -34,6 +34,8 @@ const SignUpForm = () => {
     });
 
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl");
 
     const onSubmit: SubmitHandler<SignUpSchema> = async (value) => {
         const res = await signUp(value);
@@ -45,7 +47,8 @@ const SignUpForm = () => {
         toast.success("Successfully Registered", {
             description: "Your account has been created successfully.",
         });
-        return router.push("/");
+
+        return router.push(callbackUrl ?? "/");
     };
     return (
         <Card className="mx-auto max-w-lg">
