@@ -55,6 +55,7 @@ export const shippingAddressFormSchema = z.object({
     fullName: z.string().min(3, { message: "Name must be at least 3 characters" }),
     address: z.string().min(3, { message: "Street must be at least 3 characters" }),
     city: z.string().min(3, { message: "City must be at least 3 characters" }),
+    region: z.string().min(3, { message: "Region must be at least 3 characters" }),
     postalCode: z.string().min(5, { message: "Postal code must be at least 5 characters" }),
     country: z.string().min(3, { message: "Country must be at least 3 characters" }),
     lat: z.number().optional(),

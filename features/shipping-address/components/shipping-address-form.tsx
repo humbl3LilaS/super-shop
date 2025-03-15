@@ -1,6 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { encrypt } from "@/lib/utils";
 import { IShippingAddressForm, shippingAddressFormSchema } from "@/lib/validators";
 
 const ShippingAddressForm = ({
@@ -22,17 +24,21 @@ const ShippingAddressForm = ({
 }) => {
     const form = useForm<IShippingAddressForm>({
         resolver: zodResolver(shippingAddressFormSchema),
+        mode: "onChange",
         defaultValues: {
             fullName: defaultValues?.fullName,
             address: defaultValues?.address ?? "",
             city: defaultValues?.city ?? "",
             postalCode: defaultValues?.postalCode ?? "",
+            region: defaultValues?.region ?? "",
             country: defaultValues?.country ?? "",
         },
     });
+    const router = useRouter();
 
     const onSubmit: SubmitHandler<IShippingAddressForm> = async (values) => {
-        console.log(values);
+        sessionStorage.setItem("shipping-address", encrypt(values));
+        router.push("/payment-method");
     };
     return (
         <Form {...form}>
@@ -71,6 +77,20 @@ const ShippingAddressForm = ({
                     render={({ field }) => (
                         <FormItem className={"mb-4"}>
                             <FormLabel>City:</FormLabel>
+                            <FormControl>
+                                <Input placeholder={"Eg: Yankin"} {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name={"region"}
+                    render={({ field }) => (
+                        <FormItem className={"mb-4"}>
+                            <FormLabel>Region:</FormLabel>
                             <FormControl>
                                 <Input placeholder={"Eg: Yangon"} {...field} />
                             </FormControl>
@@ -114,10 +134,10 @@ const ShippingAddressForm = ({
                     {form.formState.isSubmitting ? (
                         <>
                             <Loader2 className={"mr-2 inline-block animate-spin"} />
-                            <span>Submitting...</span>
+                            <span>Processing...</span>
                         </>
                     ) : (
-                        <span>Submit</span>
+                        <span>Continue</span>
                     )}
                 </Button>
             </form>
