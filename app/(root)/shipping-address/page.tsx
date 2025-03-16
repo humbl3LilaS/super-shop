@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
+import CheckoutSteps from "@/components/shared/checkout-steps";
 import { getCart } from "@/features/cart/actions/get-cart";
 import ShippingAddressForm from "@/features/shipping-address/components/shipping-address-form";
 import { getUserById } from "@/lib/actions/get-user-by-id";
@@ -25,9 +26,11 @@ const ShippingAddressPage = async () => {
     if (!cart || cart.items.length === 0) {
         redirect("/cart");
     }
+
     return (
         <section>
-            <div className={"max-w-lg mx-auto my-8 "}>
+            <CheckoutSteps />
+            <div className={"max-w-xl mx-auto my-8 "}>
                 <header className={"mb-8"}>
                     <h1 className={"h2-bold mb-3"}>Shipping Address</h1>
                     <p className={"text-sm text-muted-foreground"}>

@@ -1,8 +1,9 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +15,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { encrypt } from "@/lib/utils";
+import { updateShippingAddress } from "@/features/shipping-address/actions/update-shipping-address";
 import { IShippingAddressForm, shippingAddressFormSchema } from "@/lib/validators";
 
 const ShippingAddressForm = ({
@@ -37,7 +38,23 @@ const ShippingAddressForm = ({
     const router = useRouter();
 
     const onSubmit: SubmitHandler<IShippingAddressForm> = async (values) => {
-        sessionStorage.setItem("shipping-address", encrypt(values));
+        const updatedFields = Object.keys(form.formState.dirtyFields);
+        if (updatedFields.length === 0 && form.formState.isValid) {
+            toast.success("Shipping Address has been verified");
+            return router.push("/payment-method");
+        }
+        const res = await updateShippingAddress({
+            address: values.address,
+            postalCode: values.address,
+            city: values.address,
+            region: values.region,
+            country: values.country,
+        });
+
+        if (!res.success) {
+            return toast.error(res.message);
+        }
+        toast.success(res.message);
         router.push("/payment-method");
     };
     return (
@@ -127,7 +144,7 @@ const ShippingAddressForm = ({
                     )}
                 />
                 <Button
-                    className={"mt-4 w-full"}
+                    className={" w-fit mt-4 ml-auto flex items-center"}
                     type={"submit"}
                     disabled={form.formState.isSubmitting || !form.formState.isValid}
                 >
@@ -137,7 +154,10 @@ const ShippingAddressForm = ({
                             <span>Processing...</span>
                         </>
                     ) : (
-                        <span>Continue</span>
+                        <>
+                            <ArrowRight />
+                            <span>Continue</span>
+                        </>
                     )}
                 </Button>
             </form>

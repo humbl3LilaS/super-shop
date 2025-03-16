@@ -105,3 +105,18 @@ export const SAMPLE_USER = [
         role: "ADMIN",
     },
 ];
+
+export const CHECKOUT_STEPS = [
+    {
+        segment: "shipping-address",
+        label: "Shipping",
+    },
+    {
+        segment: "payment-method",
+        label: "Payment",
+    },
+    {
+        segment: "order",
+        label: "Order",
+    },
+];
