@@ -120,3 +120,5 @@ export const CHECKOUT_STEPS = [
         label: "Order",
     },
 ];
+
+export const PAYMENT_METHODS = ["paypal", "stripe", "cash on delivery"];
