@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { PAYMENT_METHODS } from "@/lib/constants";
 import { toDecimal } from "@/lib/utils";
 
 export const currency = z
@@ -63,3 +64,10 @@ export const shippingAddressFormSchema = z.object({
 });
 
 export type IShippingAddressForm = Zod.infer<typeof shippingAddressFormSchema>;
+
+export const paymentMethodFormSchema = z.object({
+    paymentMethod: z
+        .string()
+        .min(1)
+        .refine((x) => PAYMENT_METHODS.includes(x)),
+});
