@@ -26,11 +26,10 @@ const ShippingAddressPage = async () => {
     if (!cart || cart.items.length === 0) {
         redirect("/cart");
     }
+
     return (
         <section>
-            <div>
-                <CheckoutSteps />
-            </div>
+            <CheckoutSteps />
             <div className={"max-w-xl mx-auto my-8 "}>
                 <header className={"mb-8"}>
                     <h1 className={"h2-bold mb-3"}>Shipping Address</h1>
