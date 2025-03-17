@@ -4,3 +4,5 @@ export * from "./account";
 export * from "./session";
 export * from "./verificationtoken";
 export * from "./cart";
+export * from "./order";
+export * from "./orderitem";
