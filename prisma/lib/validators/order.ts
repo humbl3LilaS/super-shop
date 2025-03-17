@@ -35,7 +35,7 @@ export const OrderModelSchema = z.object({
     id: z.string(),
     userId: z.string(),
     shippingAddress: imports.address,
-    paymentMethod: z.string(),
+    paymentMethod: imports.paymentMethod,
     paymentResult: jsonSchema,
     itemsPrice: imports.currency,
     shippingFee: imports.currency,

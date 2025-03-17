@@ -1,10 +1,17 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 import CheckoutSteps from "@/components/shared/checkout-steps";
 import { getCart } from "@/features/cart/actions/get-cart";
-import ShippingAddressForm from "@/features/shipping-address/components/shipping-address-form";
+import ShippingAddressForm from "@/features/checkout-flow/components/shipping-address-form";
 import { getUserById } from "@/lib/actions/get-user-by-id";
+
+export const metadata: Metadata = {
+    title: "Shipping Address | SuperStore",
+    description: "Please Specify a shipping address to checkout the shipping",
+    metadataBase: new URL(process.env.NEXT_PUBLIC_ENDPOINT!),
+};
 
 const ShippingAddressPage = async () => {
     const session = await auth();

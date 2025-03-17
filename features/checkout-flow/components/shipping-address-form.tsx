@@ -15,7 +15,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { updateShippingAddress } from "@/features/shipping-address/actions/update-shipping-address";
+import { updateShippingAddress } from "@/features/checkout-flow/actions/update-shipping-address";
 import { IShippingAddressForm, shippingAddressFormSchema } from "@/lib/validators";
 
 const ShippingAddressForm = ({
