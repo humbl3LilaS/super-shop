@@ -29,7 +29,7 @@ const PaymentMethodPage = async () => {
     }
     return (
         <section>
-            <CheckoutSteps />
+            <CheckoutSteps currentStep={"payment-method"} />
             <div className={"max-w-xl mx-auto my-8 "}>
                 <header className={"mb-8"}>
                     <h1 className={"h2-bold mb-3"}>Payment Method</h1>
