@@ -3,9 +3,20 @@ import React from "react";
 import { CHECKOUT_STEPS, CheckoutStep } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const CheckoutSteps = ({ currentStep }: { currentStep: CheckoutStep }) => {
+const CheckoutSteps = ({
+    currentStep,
+    className,
+}: {
+    currentStep: CheckoutStep;
+    className?: string;
+}) => {
     return (
-        <div className={"max-w-3xl mx-auto flex justify-between items-center gap-x-4 md:gap-x-10"}>
+        <div
+            className={cn(
+                "max-w-3xl mx-auto flex justify-between items-center gap-x-4 md:gap-x-10",
+                className,
+            )}
+        >
             {CHECKOUT_STEPS.map((step, idx) => (
                 <React.Fragment key={step.step}>
                     <div

@@ -1,6 +1,9 @@
-import { ShoppingCart } from "lucide-react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getCart } from "@/features/cart/actions/get-cart";
 import CartSummary from "@/features/cart/components/cart-summary";
 import CartTable from "@/features/cart/components/cart-table";
@@ -25,7 +28,20 @@ const CartPage = async () => {
             {cart && (
                 <div className={"grid gap-y-6 md:grid-cols-5 lg:grid-cols-4 md:gap-x-10"}>
                     <CartTable cart={JSON.parse(JSON.stringify(cart))} />
-                    <CartSummary cart={cart} />
+                    <Card className={"h-fit p-4  md:col-span-2 lg:col-span-1"}>
+                        <CardContent className={"p-0 flex flex-col gap-y-4"}>
+                            <CartSummary cart={cart} />
+                            <Button asChild={true}>
+                                <Link
+                                    href={`/shipping-address`}
+                                    className={"flex justify-between items-center"}
+                                >
+                                    <ArrowRight />
+                                    <span>Checkout</span>
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
                 </div>
             )}
         </section>
