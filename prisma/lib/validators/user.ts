@@ -9,6 +9,8 @@ import {
     RelatedSessionModelSchema,
     CompleteCart,
     RelatedCartModelSchema,
+    CompleteOrder,
+    RelatedOrderModelSchema,
 } from "./index";
 
 // Helper schema for JSON fields
@@ -37,6 +39,7 @@ export interface CompleteUser extends z.infer<typeof UserModelSchema> {
     accounts: CompleteAccount[];
     Session: CompleteSession[];
     cart: CompleteCart[];
+    Order: CompleteOrder[];
 }
 
 /**
@@ -49,5 +52,6 @@ export const RelatedUserModelSchema: z.ZodSchema<CompleteUser> = z.lazy(() =>
         accounts: RelatedAccountModelSchema.array(),
         Session: RelatedSessionModelSchema.array(),
         cart: RelatedCartModelSchema.array(),
+        Order: RelatedOrderModelSchema.array(),
     }),
 );

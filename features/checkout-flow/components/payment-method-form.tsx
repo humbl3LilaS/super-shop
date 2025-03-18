@@ -16,7 +16,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { RadioGroupItem } from "@/components/ui/radio-group";
-import { updatePaymentMethod } from "@/features/payment-method/actions/update-payment-method";
+import { updatePaymentMethod } from "@/features/checkout-flow/actions/update-payment-method";
 import { PAYMENT_METHODS } from "@/lib/constants";
 import { paymentMethodFormSchema } from "@/lib/validators";
 

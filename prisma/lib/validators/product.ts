@@ -3,6 +3,8 @@ import * as z from "zod";
 
 import * as imports from "./helpers";
 
+import { CompleteOrderItem, RelatedOrderItemModelSchema } from "./index";
+
 // Helper schema for Decimal fields
 z.instanceof(Decimal)
     .or(z.string())
@@ -32,3 +34,18 @@ export const ProductModelSchema = z.object({
     banner: z.string().nullish(),
     createdAt: z.date(),
 });
+
+export interface CompleteProduct extends z.infer<typeof ProductModelSchema> {
+    OrderItem: CompleteOrderItem[];
+}
+
+/**
+ * RelatedProductModelSchema contains all relations on your model in addition to the scalars
+ *
+ * NOTE: Lazy required in case of potential circular dependencies within schema
+ */
+export const RelatedProductModelSchema: z.ZodSchema<CompleteProduct> = z.lazy(() =>
+    ProductModelSchema.extend({
+        OrderItem: RelatedOrderItemModelSchema.array(),
+    }),
+);

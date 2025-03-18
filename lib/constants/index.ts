@@ -108,17 +108,19 @@ export const SAMPLE_USER = [
 
 export const CHECKOUT_STEPS = [
     {
-        segment: "shipping-address",
+        step: "shipping-address",
         label: "Shipping",
     },
     {
-        segment: "payment-method",
+        step: "payment-method",
         label: "Payment",
     },
     {
-        segment: "order",
+        step: "place-order",
         label: "Order",
     },
-];
+] as const;
+
+export type CheckoutStep = (typeof CHECKOUT_STEPS)[number]["step"];
 
 export const PAYMENT_METHODS = ["paypal", "stripe", "cash on delivery"];
