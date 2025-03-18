@@ -8,6 +8,7 @@ import { getCart } from "@/features/cart/actions/get-cart";
 import CartSummary from "@/features/cart/components/cart-summary";
 import OrderItemsInfo from "@/features/checkout-flow/components/order-items-info";
 import PaymentMethodInfo from "@/features/checkout-flow/components/payment-method-info";
+import PlaceOrderForm from "@/features/checkout-flow/components/place-order-form";
 import ShippingAddressInfo from "@/features/checkout-flow/components/shipping-address-info";
 import { getUserById } from "@/lib/actions/get-user-by-id";
 import { address } from "@/prisma/lib/validators/helpers";
@@ -57,6 +58,7 @@ const PlaceOrderPage = async () => {
                     <Card>
                         <CardContent className={"flex flex-col gap-y-3"}>
                             <CartSummary cart={cart} />
+                            <PlaceOrderForm />
                         </CardContent>
                     </Card>
                 </div>

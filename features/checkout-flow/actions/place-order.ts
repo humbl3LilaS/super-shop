@@ -76,6 +76,7 @@ export const placeOrder = async (): Promise<
             shippingFee: cart.shippingFee,
             tax: cart.tax,
             totalPrice: cart.totalPrice,
+            paymentMethod: user.paymentMethod,
         });
 
         const newOrderId = await prisma.$transaction(async (tx) => {
