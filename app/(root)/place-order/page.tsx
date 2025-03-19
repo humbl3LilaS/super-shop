@@ -44,6 +44,7 @@ const PlaceOrderPage = async () => {
         return redirect("/payment-method");
     }
 
+    const totalQty = cart.items.reduce((acc, item) => acc + item.qty, 0);
     return (
         <section>
             <CheckoutSteps currentStep={"place-order"} className={"max-w-full lg:px-16"} />
@@ -52,12 +53,20 @@ const PlaceOrderPage = async () => {
                 <div className={"lg:col-span-2 flex flex-col gap-y-4"}>
                     <ShippingAddressInfo data={{ ...parsedAddress.data, fullName: user.name }} />
                     <PaymentMethodInfo preferredMethod={user.paymentMethod} />
-                    <OrderItemsInfo data={cart} />
+                    <OrderItemsInfo data={cart.items} editable={true} />
                 </div>
                 <div>
                     <Card>
                         <CardContent className={"flex flex-col gap-y-3"}>
-                            <CartSummary cart={cart} />
+                            <CartSummary
+                                data={{
+                                    totalQty,
+                                    itemsPrice: cart.itemsPrice,
+                                    tax: cart.tax,
+                                    shippingFee: cart.shippingFee,
+                                    totalPrice: cart.totalPrice,
+                                }}
+                            />
                             <PlaceOrderForm />
                         </CardContent>
                     </Card>

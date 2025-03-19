@@ -12,9 +12,22 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/utils";
-import { ICart } from "@/prisma/lib/validators/validators.type";
 
-const OrderItemsInfo = ({ data }: { data: ICart }) => {
+type OrderItem = {
+    name: string;
+    productId: string;
+    slug: string;
+    image: string;
+    price: string;
+    qty: number;
+};
+
+type OrderItemsInfoProps = {
+    data: OrderItem[];
+    editable?: boolean;
+};
+
+const OrderItemsInfo = ({ data, editable = false }: OrderItemsInfoProps) => {
     return (
         <Card>
             <CardHeader>
@@ -30,7 +43,7 @@ const OrderItemsInfo = ({ data }: { data: ICart }) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data.items.map((item) => (
+                        {data.map((item) => (
                             <TableRow key={item.productId}>
                                 <TableCell>
                                     <Link
@@ -43,13 +56,7 @@ const OrderItemsInfo = ({ data }: { data: ICart }) => {
                                             width={50}
                                             height={50}
                                         />
-                                        <span
-                                            className={
-                                                "md:line-clamp-1 md:max-w-24 lg:max-w-[unset]"
-                                            }
-                                        >
-                                            {item.name}
-                                        </span>
+                                        <span>{item.name}</span>
                                     </Link>
                                 </TableCell>
                                 <TableCell>{item.qty}</TableCell>
@@ -61,9 +68,11 @@ const OrderItemsInfo = ({ data }: { data: ICart }) => {
                     </TableBody>
                 </Table>
 
-                <Button asChild={true} variant={"outline"} className={"mt-4"}>
-                    <Link href={"/payment-method"}>Edit</Link>
-                </Button>
+                {editable && (
+                    <Button asChild={true} variant={"outline"} className={"mt-4"}>
+                        <Link href={"/payment-method"}>Edit</Link>
+                    </Button>
+                )}
             </CardContent>
         </Card>
     );

@@ -72,5 +72,53 @@ export const prisma = new PrismaClient({ adapter }).$extends({
                 },
             },
         },
+        order: {
+            itemsPrice: {
+                compute(order) {
+                    return order.itemsPrice.toString();
+                },
+            },
+            totalPrice: {
+                compute(order) {
+                    return order.totalPrice.toString();
+                },
+            },
+            shippingFee: {
+                compute(order) {
+                    return order.shippingFee.toString();
+                },
+            },
+            tax: {
+                compute(order) {
+                    return order.tax.toString();
+                },
+            },
+            createdAt: {
+                compute(order) {
+                    return order.createdAt.toISOString();
+                },
+            },
+            paidAt: {
+                compute(order) {
+                    if (!order.paidAt) {
+                        return null;
+                    }
+                    return order.paidAt.toISOString();
+                },
+            },
+            deliveredAt: {
+                compute(order) {
+                    if (!order.deliveredAt) {
+                        return null;
+                    }
+                    return order.deliveredAt.toISOString();
+                },
+            },
+            shippingAddress: {
+                compute(order) {
+                    return order.shippingAddress as IAddress;
+                },
+            },
+        },
     },
 });

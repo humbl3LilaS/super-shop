@@ -30,7 +30,18 @@ const CartPage = async () => {
                     <CartTable cart={JSON.parse(JSON.stringify(cart))} />
                     <Card className={"h-fit p-4  md:col-span-2 lg:col-span-1"}>
                         <CardContent className={"p-0 flex flex-col gap-y-4"}>
-                            <CartSummary cart={cart} />
+                            <CartSummary
+                                data={{
+                                    totalPrice: cart.totalPrice,
+                                    tax: cart.tax,
+                                    shippingFee: cart.shippingFee,
+                                    itemsPrice: cart.itemsPrice,
+                                    totalQty: cart.items.reduce(
+                                        (total, item) => total + item.qty,
+                                        0,
+                                    ),
+                                }}
+                            />
                             <Button asChild={true}>
                                 <Link
                                     href={`/shipping-address`}
