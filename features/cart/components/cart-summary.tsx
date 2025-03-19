@@ -1,29 +1,37 @@
 import { formatCurrency } from "@/lib/utils";
-import { ICart } from "@/prisma/lib/validators/validators.type";
 
-const CartSummary = ({ cart }: { cart: ICart }) => {
-    const totalQty = cart.items.reduce((acc, item) => acc + item.qty, 0);
+type CartSummaryProps = {
+    data: {
+        itemsPrice: string;
+        totalQty: number;
+        shippingFee: string;
+        tax: string;
+        totalPrice: string;
+    };
+};
+
+const CartSummary = ({ data }: CartSummaryProps) => {
     return (
         <>
             <p className={"flex items-center justify-between font-semibold"}>
                 <span className={"text-muted-foreground"}>Total Price:</span>
-                <span>{formatCurrency(cart.itemsPrice)}</span>
+                <span>{formatCurrency(data.itemsPrice)}</span>
             </p>
             <p className={"flex items-center justify-between font-semibold"}>
                 <span className={"text-muted-foreground"}>Total Qty:</span>
-                <span>{totalQty}</span>
+                <span>{data.totalQty}</span>
             </p>
             <p className={"flex items-center justify-between font-semibold"}>
                 <span className={"text-muted-foreground"}>Shipping Fee:</span>
-                <span>{formatCurrency(cart.shippingFee)}</span>
+                <span>{formatCurrency(data.shippingFee)}</span>
             </p>
             <p className={"flex items-center justify-between font-semibold"}>
                 <span className={"text-muted-foreground"}>Tax:</span>
-                <span>{formatCurrency(cart.tax)}</span>
+                <span>{formatCurrency(data.tax)}</span>
             </p>
             <p className={"flex items-center justify-between font-semibold"}>
                 <span>Sub Total:</span>
-                <span>{formatCurrency(cart.totalPrice)}</span>
+                <span>{formatCurrency(data.totalPrice)}</span>
             </p>
         </>
     );
