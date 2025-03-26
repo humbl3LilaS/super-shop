@@ -1,12 +1,10 @@
 "use server";
 
 import { auth } from "@/auth";
-import { sleep } from "@/lib/utils";
 import { prisma } from "@/prisma/lib/prisma";
 
-export const getUserOrders = async (page?: number) => {
-    await sleep(4000);
-    const offset = ((page ?? 1) - 1) * 5;
+export const getUserOrders = async (page?: number, limit?: number) => {
+    const offset = ((page ?? 1) - 1) * (limit ?? 5);
     const session = await auth();
     if (!session) {
         throw new Error("Unauthorized Request");
@@ -14,7 +12,7 @@ export const getUserOrders = async (page?: number) => {
     const data = await prisma.order.findMany({
         where: { userId: session.user.id },
         orderBy: { createdAt: "desc" },
-        take: 5,
+        take: limit ?? 5,
         skip: offset,
     });
 
@@ -23,8 +21,7 @@ export const getUserOrders = async (page?: number) => {
     });
 
     return {
-        success: true,
         data,
-        totalPages: Math.ceil(dataCount / 5),
+        totalPages: Math.ceil(dataCount / (limit ?? 5)),
     };
 };
