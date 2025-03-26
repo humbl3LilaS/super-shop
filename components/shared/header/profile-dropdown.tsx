@@ -1,5 +1,5 @@
 "use client";
-import { User } from "lucide-react";
+import { ShoppingBag, User } from "lucide-react";
 import Link from "next/link";
 import { Session } from "next-auth";
 
@@ -39,9 +39,17 @@ const ProfileDropdown = ({ session }: { session: Session }) => {
                 </DropdownMenuLabel>
                 <DropdownMenuItem className={"mt-2 w-full"}>
                     <Button asChild={true} className={"w-full"}>
-                        <Link href="/profile">
+                        <Link href="/user/profile">
                             <User fill={"white"} />
                             <span className={"ml-2"}>Profile</span>
+                        </Link>
+                    </Button>
+                </DropdownMenuItem>
+                <DropdownMenuItem className={"mt-2 w-full"}>
+                    <Button asChild={true} className={"w-full"}>
+                        <Link href="/user/orders">
+                            <ShoppingBag fill={"white"} />
+                            <span className={"ml-2"}>Orders</span>
                         </Link>
                     </Button>
                 </DropdownMenuItem>
