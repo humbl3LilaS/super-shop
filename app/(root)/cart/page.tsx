@@ -10,8 +10,7 @@ import CartTable from "@/features/cart/components/cart-table";
 import EmptyCart from "@/features/cart/components/empty-cart";
 
 export const metadata: Metadata = {
-    title: "Cart | SuperStore",
-    description: "Checkout the items in you cart",
+    title: "User Profile",
     metadataBase: new URL(process.env.NEXT_PUBLIC_ENDPOINT!),
 };
 

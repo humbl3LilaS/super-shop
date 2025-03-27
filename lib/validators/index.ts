@@ -9,20 +9,6 @@ export const currency = z
         message: "Price must have exactly two decimal places",
     });
 
-export const InsertProductSchema = z.object({
-    name: z.string().min(3, { message: "Name must be at least 3 characters" }),
-    slug: z.string().min(3, { message: "Slug must be at least 3 characters" }),
-    category: z.string().min(3, { message: "Category must be at least 3 characters" }),
-    brand: z.string().min(10, { message: "Brand must be at least 10 characters" }),
-    description: z.string().min(20, { message: "Description must be at least 20 characters" }),
-    stock: z.coerce.number(),
-    numReviews: z.coerce.number(),
-    images: z.string().array().min(1, { message: "Product must be at least 1 images" }),
-    isFeatured: z.boolean(),
-    banner: z.string().nullable(),
-    price: currency,
-});
-
 export const signInSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8),
@@ -43,15 +29,6 @@ export const signUpSchema = z
 
 export type SignUpSchema = Zod.infer<typeof signUpSchema>;
 
-export const insertCartSchema = z.object({
-    itemsPrice: z.string(),
-    totalPrice: z.string(),
-    salePrice: z.string(),
-    taxPrice: z.string(),
-    sessionCartId: z.string().min(1),
-    userId: z.string().optional().nullable(),
-});
-
 export const shippingAddressFormSchema = z.object({
     fullName: z.string().min(3, { message: "Name must be at least 3 characters" }),
     address: z.string().min(3, { message: "Street must be at least 3 characters" }),
@@ -71,3 +48,10 @@ export const paymentMethodFormSchema = z.object({
         .min(1)
         .refine((x) => PAYMENT_METHODS.includes(x)),
 });
+
+export const profileUpdateSchema = z.object({
+    email: z.string().email(),
+    name: z.string().min(3, { message: "Username must be at least 3 characters" }),
+});
+
+export type ProfileUpdateSchema = Zod.infer<typeof profileUpdateSchema>;
