@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { getUserOrders } from "../actions/get-user-orders";
+
 import { Button } from "@/components/ui/button";
 import {
     Table,
@@ -9,10 +11,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import UserOrdersTablePagination from "@/features/profile/user-orders-table-pagination";
+import UserOrdersTablePagination from "@/features/profile/components/user-orders-table-pagination";
 import { formatCurrency, formatDate, formatUUID } from "@/lib/utils";
-
-import { getUserOrders } from "./actions/get-user-orders";
 
 const UserOrdersTable = async ({ currPage }: { currPage: number }) => {
     const orders = await getUserOrders(currPage);

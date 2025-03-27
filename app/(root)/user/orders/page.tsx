@@ -1,10 +1,16 @@
 import { ShoppingBag } from "lucide-react";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import { auth } from "@/auth";
-import UserOrdersTable from "@/features/profile/user-orders-table";
-import UserOrdersTableSkeleton from "@/features/profile/user-orders-table-skeleton";
+import UserOrdersTable from "@/features/profile/components/user-orders-table";
+import UserOrdersTableSkeleton from "@/features/profile/components/user-orders-table-skeleton";
+
+export const metadata: Metadata = {
+    title: "User Orders",
+    metadataBase: new URL(process.env.NEXT_PUBLIC_ENDPOINT!),
+};
 
 type PageProps = {
     searchParams: Promise<{
